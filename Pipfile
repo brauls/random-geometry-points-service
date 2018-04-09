@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 random-geometry-points = "*"
+flask = "*"
 
 [dev-packages]
 pylint = "*"
