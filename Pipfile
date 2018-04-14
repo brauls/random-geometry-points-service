@@ -5,7 +5,9 @@ name = "pypi"
 
 [packages]
 random-geometry-points = "*"
-flask = "*"
+Flask = "*"
+flask-restplus = "*"
+marshmallow = "*"
 
 [dev-packages]
 pylint = "*"
