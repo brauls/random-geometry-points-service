@@ -1,7 +1,7 @@
 """2D circle model and schema
 """
 
-from marshmallow import Schema, fields
+from marshmallow import Schema, fields, post_load
 
 class Circle2D(object):
     """Class to represent 2D circles.
@@ -21,3 +21,7 @@ class Circle2DSchema(Schema):
     center_x = fields.Float(required=True)
     center_y = fields.Float(required=True)
     radius = fields.Float(required=True, description="The radius")
+
+    @post_load
+    def create_circle(self, data):
+        return Circle2D(**data)
