@@ -23,5 +23,7 @@ class Circle2DSchema(Schema):
     radius = fields.Float(required=True, description="The radius")
 
     @post_load
-    def create_circle(self, data):
+    def _create_circle(self, data):
+        """Create a Circle2D instance after data was loaded successfully through Circle2DSchema.
+        """
         return Circle2D(**data)

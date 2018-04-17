@@ -20,5 +20,7 @@ class Point2DSchema(Schema):
     y_coord = fields.Float(required=True, description="The y coordinate")
 
     @post_load
-    def create_point(self, data):
+    def _create_point(self, data):
+        """Create a Point2D instance after data was loaded successfully through Point2DSchema.
+        """
         return Point2D(**data)

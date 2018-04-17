@@ -1,14 +1,14 @@
+"""API initialization module.
+"""
+
 from flask_restplus import Api
 
-from .cats import api as ns1
-from .circles import api as ns2
+from .circles import API as circle_api
 
-api = Api(
-    title='My Title',
+API = Api(
+    title='Random Point Generation API',
     version='1.0',
-    description='A description',
-    # All API metadatas
+    description='Create an arbitrary number of random points on different geometries',
 )
 
-api.add_namespace(ns1)
-api.add_namespace(ns2)
+API.add_namespace(circle_api)

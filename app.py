@@ -1,7 +1,10 @@
+"""Entry module that inits the flask app.
+"""
+
 from flask import Flask
-from apis import api
+from apis import API
 
-app = Flask(__name__)
-api.init_app(app)
+APP = Flask(__name__)
+API.init_app(APP)
 
-app.run(debug=True)
+APP.run(debug=True)

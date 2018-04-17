@@ -1,5 +1,8 @@
+"""REST interface module for random point generation on 2D circles.
+"""
+
 from flask import request
-from flask_restplus import Namespace, Resource, fields
+from flask_restplus import Namespace, Resource
 
 from werkzeug.exceptions import BadRequest
 
@@ -9,25 +12,20 @@ from .common.models.point2d import Point2DSchema
 from .common.models.circle2d import Circle2DSchema
 from .common.models.point_count import PointCountSchema
 
-api = Namespace('circles_2D', description='Generate random points on 2D circles')
+API = Namespace("circles_2D", description="Generate random points on 2D circles")
 
-# define model for swagger
-# cannot use circle schema at the moment in flask_restplus
-CIRCLE_API_MODEL = api.model('circle_2D', {
-    'x': fields.Float(required=True, description='The x coordinate'),
-    'y': fields.Float(required=True, description='The y coordinate'),
-    'radius': fields.Float(required=True, description='The radius'),
-})
-
-@api.route('/')
+@API.route("/")
 class CircleList(Resource):
-    @api.param(name="center_x", description="The x coordinate of the circle center", _in="query")
-    @api.param(name="center_y", description="The y coordinate of the circle center", _in="query")
-    @api.param(name="radius", description="The radius of the circle", _in="query")
-    @api.param(name="num_points", description="The rnumber of random points to create", _in="query")
-    @api.doc('list_random_circle_points')
+    """REST interface class for random point generation on 2D circles.
+    """
+
+    @API.param(name="center_x", description="The x coordinate of the circle center", _in="query")
+    @API.param(name="center_y", description="The y coordinate of the circle center", _in="query")
+    @API.param(name="radius", description="The radius of the circle", _in="query")
+    @API.param(name="num_points", description="The rnumber of random points to create", _in="query")
+    @API.doc("list_random_circle_points")
     def get(self):
-        '''Generate random points for the input 2D circle parameters'''
+        """Generate random points for the input 2D circle parameters"""
         circle_schema = Circle2DSchema()
         point_schema = Point2DSchema(many=True)
         point_count_schema = PointCountSchema()
@@ -40,7 +38,7 @@ class CircleList(Resource):
             raise BadRequest("Invalid circle definition supplied")
         if point_count_validation.errors:
             raise BadRequest("Invalid point count definition supplied")
-        
+
         circle = circle_validation.data
         point_count = point_count_validation.data
 

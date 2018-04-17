@@ -18,5 +18,7 @@ class PointCountSchema(Schema):
     num_points = fields.Integer(required=True)
 
     @post_load
-    def create_point_count(self, data):
+    def _create_point_count(self, data):
+        """Create a PointCount instance after data was loaded successfully through PointCountSchema.
+        """
         return PointCount(**data)
