@@ -3,16 +3,17 @@
 
 from flask import request
 from flask_restplus import Namespace, Resource
-
 from werkzeug.exceptions import BadRequest
 
 from .common.services.circle2d_points_service import create_random_points_on_circle
+from .common.register_error_handler import register_error_handler
 
 from .common.models.point2d import Point2DSchema
 from .common.models.circle2d import Circle2DSchema
 from .common.models.point_count import PointCountSchema
 
 API = Namespace("circles_2D", description="Generate random points on 2D circles")
+register_error_handler(API)
 
 @API.route("/")
 class CircleList(Resource):
@@ -26,6 +27,7 @@ class CircleList(Resource):
     @API.doc("list_random_circle_points")
     def get(self):
         """Generate random points for the input 2D circle parameters"""
+
         circle_schema = Circle2DSchema()
         point_schema = Point2DSchema(many=True)
         point_count_schema = PointCountSchema()
