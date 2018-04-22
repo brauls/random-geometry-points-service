@@ -1,7 +1,7 @@
 """REST interface module for random point generation on 2D circles.
 """
 
-from flask import request
+from flask import request, jsonify
 from flask_restplus import Namespace, Resource
 from werkzeug.exceptions import BadRequest
 
@@ -45,4 +45,6 @@ class CircleList(Resource):
         point_count = point_count_validation.data
 
         random_points = create_random_points_on_circle(circle, point_count)
-        return point_schema.dump(random_points)
+        result = point_schema.dump(random_points)
+        return jsonify(result.data)
+        #return point_schema.dumps(random_points)
