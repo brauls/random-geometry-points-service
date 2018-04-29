@@ -8,12 +8,12 @@ def create_random_points_on_circle(circle_model, num_points):
     """Create num_points random points on the input circle.
 
     Args:
-      circle_model (..models.circle2d.Circle2D): The circle parameters used for the
-        random point creation
-      num_points (..models.point_count.PointCount): The number of random points to be created
+        circle_model (..models.circle2d.Circle2D): The circle parameters used for the
+          random point creation
+        num_points (..models.point_count.PointCount): The number of random points to be created
 
     Returns:
-      list(..models.point2d.Point2D): The list of created random points
+        list(..models.point2d.Point2D): The list of created random points
     """
     circle = _get_circle_point_creator(circle_model)
     random_points = circle.create_random_points(num_points.num_points)

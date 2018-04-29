@@ -15,7 +15,7 @@ class PointCount(object):
 class PointCountSchema(Schema):
     """Schema class for PointCount class used for validation.
     """
-    num_points = fields.Integer(required=True)
+    num_points = fields.Integer(required=True, description="The number of points")
 
     @post_load
     def _create_point_count(self, data):

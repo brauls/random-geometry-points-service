@@ -18,8 +18,8 @@ class Circle2D(object):
 class Circle2DSchema(Schema):
     """Schema class for Circle2D class used for validation.
     """
-    center_x = fields.Float(required=True)
-    center_y = fields.Float(required=True)
+    center_x = fields.Float(required=True, description="The x coordinate of the center point")
+    center_y = fields.Float(required=True, description="The y coordinate of the center point")
     radius = fields.Float(required=True, description="The radius")
 
     @post_load

@@ -9,7 +9,7 @@ def create_app():
     """Create the flask app and initialize the random geometry points api.
 
     Returns:
-      Flask: The initialized flask app
+        Flask: The initialized flask app
     """
     flask_app = Flask(__name__)
     api = init_api()

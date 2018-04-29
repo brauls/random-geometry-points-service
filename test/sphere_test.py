@@ -1,4 +1,4 @@
-"""Tests for the circle_2d endpoint.
+"""Tests for the sphere endpoint.
 """
 import sys
 import os
@@ -18,11 +18,12 @@ def _api_client():
     app.testing = True
     return app.test_client()
 
-def test_get_circles():
+def test_get_spheres():
     """Test the random point generation with valid input data.
     """
     app = _api_client()
-    response = app.get("/random-circle-points/2d/?num_points=5&center_x=2.3&center_y=-3.44&radius=10")
+    response = app.get("""/random-sphere-points/3d/?num_points=5&center_x=2.3&center_y=-3.44
+    &center_z=-2&radius=10""")
     assert response.status_code == 200
     assert response.content_type == "application/json"
     obj_from_json = json.loads(response.get_data(as_text=True))
@@ -30,32 +31,38 @@ def test_get_circles():
     points = point_schema.load(obj_from_json)
     assert len(points.data) == 5
 
-def test_get_circles_missing_params():
+def test_get_spheres_missing_params():
     """Test that an appropriate response code and message is returned
-    after a get request with missing circle parameters
+    after a get request with missing sphere parameters
     """
     app = _api_client()
     test_urls = [
-        "/random-circle-points/2d/?num_points=5&center_x=2.3&center_y=3.44",
-        "/random-circle-points/2d/?num_points=5&center_x=2.3&radius=10",
-        "/random-circle-points/2d/?num_points=5&center_y=-3.44&radius=10"
+        """/random-sphere-points/3d/?num_points=5&center_x=2.3&center_y=-3.44
+        &center_z=-2""",
+        """/random-sphere-points/3d/?num_points=5&center_x=2.3&center_y=-3.44
+        &radius=10""",
+        """/random-sphere-points/3d/?num_points=5&center_x=2.3
+        &center_z=-2&radius=10""",
+        """/random-sphere-points/3d/?num_points=5&center_y=-3.44
+        &center_z=-2&radius=10"""
     ]
     def _check_response(response):
         assert response.status_code == 400
         assert response.content_type == "application/json"
         obj_from_json = json.loads(response.get_data(as_text=True))
-        assert obj_from_json['message'] == "Invalid circle definition supplied"
+        assert obj_from_json['message'] == "Invalid sphere definition supplied"
         return response
     responses = [app.get(url) for url in test_urls]
     _ = [_check_response(res) for res in responses]
 
-def test_get_circles_missing_count():
+def test_get_spheres_missing_count():
     """Test that an appropriate response code and message is returned
     after a get request with missing point count
     """
     app = _api_client()
     test_urls = [
-        "/random-circle-points/2d/?center_x=2.3&center_y=-3.44&radius=10"
+        """/random-sphere-points/3d/?center_x=2.3&center_y=-3.44
+        &center_z=-2&radius=10"""
     ]
     def _check_response(response):
         assert response.status_code == 400
@@ -66,38 +73,49 @@ def test_get_circles_missing_count():
     responses = [app.get(url) for url in test_urls]
     _ = [_check_response(res) for res in responses]
 
-def test_get_circles_invalid_params():
+def test_get_spheres_invalid_params():
     """Test that an appropriate response code and message is returned
-    after a get request with invalid circle parameters
+    after a get request with invalid sphere parameters
     """
     app = _api_client()
     test_urls = [
-        "/random-circle-points/2d/?num_points=5&center_x=text&center_y=-3.44&radius=10",
-        "/random-circle-points/2d/?num_points=5&center_x=2.3&center_y=text&radius=10",
-        "/random-circle-points/2d/?num_points=5&center_x=2.3&center_y=-3.44&radius=text",
-        "/random-circle-points/2d/?num_points=5&center_x=2.3&center_y=-3.44&radius=0",
-        "/random-circle-points/2d/?num_points=5&center_x=2.3&center_y=-3.44&radius=-1.5"
+        """/random-sphere-points/3d/?num_points=5&center_x=text&center_y=-3.44
+        &center_z=-2&radius=10""",
+        """/random-sphere-points/3d/?num_points=5&center_x=2.3&center_y=text
+        &center_z=-2&radius=10""",
+        """/random-sphere-points/3d/?num_points=5&center_x=2.3&center_y=-3.44
+        &center_z=text&radius=10""",
+        """/random-sphere-points/3d/?num_points=5&center_x=2.3&center_y=-3.44
+        &center_z=-2&radius=text""",
+        """/random-sphere-points/3d/?num_points=5&center_x=2.3&center_y=-3.44
+        &center_z=-2&radius=0""",
+        """/random-sphere-points/3d/?num_points=5&center_x=2.3&center_y=-3.44
+        &center_z=-2&radius=-1"""
     ]
     def _check_response(response):
         assert response.status_code == 400
         assert response.content_type == "application/json"
         obj_from_json = json.loads(response.get_data(as_text=True))
         msg = obj_from_json['message']
-        assert "circle definition" in msg or "radius" in msg
+        assert "sphere definition" in msg or "radius" in msg
         return response
     responses = [app.get(url) for url in test_urls]
     _ = [_check_response(res) for res in responses]
 
-def test_get_circles_invalid_count():
+def test_get_spheres_invalid_count():
     """Test that an appropriate response code and message is returned
     after a get request with invalid point count
     """
     app = _api_client()
     test_urls = [
-        "/random-circle-points/2d/?num_points=0&center_x=2.3&center_y=-3.44&radius=10",
-        "/random-circle-points/2d/?num_points=-3&center_x=2.3&center_y=-3.44&radius=10",
-        "/random-circle-points/2d/?num_points=2.5&center_x=2.3&center_y=-3.44&radius=10",
-        "/random-circle-points/2d/?num_points=text&center_x=2.3&center_y=-3.44&radius=10"
+        """/random-sphere-points/3d/?num_points=0&center_x=2.3&center_y=-3.44
+        &center_z=-2&radius=10""",
+        """/random-sphere-points/3d/?num_points=-1&center_x=2.3&center_y=-3.44
+        &center_z=-2&radius=10""",
+        """/random-sphere-points/3d/?num_points=1.5&center_x=2.3&center_y=-3.44
+        &center_z=-2&radius=10""",
+        """/random-sphere-points/3d/?num_points=text&center_x=2.3&center_y=-3.44
+        &center_z=-2&radius=10"""
     ]
     def _check_response(response):
         assert response.status_code == 400

@@ -12,11 +12,15 @@ from .common.models.point2d import Point2DSchema
 from .common.models.circle2d import Circle2DSchema
 from .common.models.point_count import PointCountSchema
 
-API = Namespace("circles_2D", description="Generate random points on 2D circles")
+API = Namespace(
+    "circles_2D",
+    description="Generate random points on 2D circles",
+    path="/random-circle-points/2d"
+)
 register_error_handler(API)
 
 @API.route("/")
-class CircleList(Resource):
+class PointOnCircleList(Resource):
     """REST interface class for random point generation on 2D circles.
     """
 
@@ -26,7 +30,8 @@ class CircleList(Resource):
     @API.param(name="num_points", description="The rnumber of random points to create", _in="query")
     @API.doc("list_random_circle_points")
     def get(self):
-        """Generate random points for the input 2D circle parameters"""
+        """Generate random points for the input 2D circle parameters
+        """
 
         circle_schema = Circle2DSchema()
         point_schema = Point2DSchema(many=True)
