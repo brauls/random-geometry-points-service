@@ -1,0 +1,17 @@
+language: python
+python:
+  - "3.6"
+
+install:
+  - "pip install pipenv"
+  - "pipenv install --dev --skip-lock"
+
+script:
+  - "pipenv run pytest --cov=random_geometry_points_service test/"
+
+after_success:
+  - "pipenv run coveralls"
+
+branches:
+  only:
+   - master
