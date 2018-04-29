@@ -47,4 +47,3 @@ class CircleList(Resource):
         random_points = create_random_points_on_circle(circle, point_count)
         result = point_schema.dump(random_points)
         return jsonify(result.data)
-        #return point_schema.dumps(random_points)
