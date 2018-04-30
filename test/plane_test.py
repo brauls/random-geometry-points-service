@@ -15,7 +15,7 @@ def _api_client():
     """Create a test client for the random geometry points api
     """
     app = create_app()
-    app.testing = True
+    app.config.from_object("random_geometry_points_service.config.TestingConfig")
     return app.test_client()
 
 def test_get_planes():
