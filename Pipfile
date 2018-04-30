@@ -8,6 +8,7 @@ random-geometry-points = "*"
 Flask = "*"
 flask-restplus = "*"
 marshmallow = "*"
+gunicorn = "*"
 
 [dev-packages]
 pylint = "*"
