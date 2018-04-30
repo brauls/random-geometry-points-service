@@ -3,6 +3,7 @@
 
 from random_geometry_points_service import app
 
+APP = app.create_app()
+
 if __name__ == "__main__":
-    APP = app.create_app()
     APP.run()
