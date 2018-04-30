@@ -1,1 +1,1 @@
-web: gunicorn main:APP
+web: gunicorn random_geometry_points_service:APP
