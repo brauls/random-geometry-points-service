@@ -15,7 +15,7 @@ def init_api():
     """
     api = Api(
         title="Random Point Generation API",
-        version="1.0",
+        version="1.0.0",
         description="Create an arbitrary number of random points on different geometries"
     )
     api.add_namespace(circle_api)
